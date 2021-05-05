@@ -1,0 +1,269 @@
+<?php namespace ProcessWire;
+
+/**
+ * FieldtypeEvents
+ * 
+ * Fieldtype for a field that stores events each with a date and title
+ * 
+ * This is an example of creating your own FieldtypeMulti to represent a spreadsheet type table of information.
+ *
+ */
+
+class FieldtypeEvents extends FieldtypeMulti {
+
+	public static function getModuleInfo() {
+		return array(
+			'title' => 'Events',
+			'version' => 4,
+			'summary' => 'Field that stores a table labels for a protein page.',
+			'icon' => 'calendar-o',
+			// 'installs' => 'InputfieldEvents', 
+		);
+	}
+
+	/**
+	 * Construct the Fieldtype, make sure all dependencies are in place
+	 * 
+	 */
+	public function __construct() {
+		require_once(__DIR__ . '/Event.php');
+		require_once(__DIR__ . '/EventArray.php');
+		parent::__construct();
+	}
+	
+	/**
+	 * Return the database schema that defines an Event
+	 *
+	 * @param Field $field
+	 * @return array
+	 *
+	 */
+	public function getDatabaseSchema(Field $field) {
+		$schema = parent::getDatabaseSchema($field);
+
+		// 'data' is a required field for any Fieldtype, and we're using it to represent our 'date' field
+		$schema['data'] = 'INT UNSIGNED NOT NULL DEFAULT 0';
+		$schema['align_start'] = 'INT UNSIGNED NOT NULL DEFAULT 0';
+		$schema['align_end'] = 'INT UNSIGNED NOT NULL DEFAULT 0';
+
+		// indexes, for any fields that need to be searchable from selectors
+		$schema['keys']['data'] = 'KEY data(data)';
+		// $schema['keys']['title'] = 'FULLTEXT title(title)';
+
+		return $schema;
+	}
+
+
+	/**
+	 * Return the Inputfield used to collect input for a field of this type
+	 * 
+	 * @param Page $page
+	 * @param Field $field
+	 * @return Inputfield|InputfieldEvents
+	 *
+	 */
+	public function getInputfield(Page $page, Field $field) {
+		$inputfield = $this->modules->get('InputfieldEvents'); /** @var InputfieldEvents $inputfield */
+		return $inputfield;
+	}
+
+	/**
+	 * Return a blank ready-to-populate value
+	 * 
+	 * @param Page $page
+	 * @param Field $field
+	 * @return EventArray
+	 *
+	 */
+	public function getBlankValue(Page $page, Field $field) {
+		return new EventArray();
+	}
+	
+	/**
+	 * Given a value, make it clean and of the correct type for storage within a Page
+	 *
+	 * @param Page $page
+	 * @param Field $field
+	 * @param EventArray $value
+	 * @return EventArray|mixed
+	 *
+	 */
+	public function sanitizeValue(Page $page, Field $field, $value) {
+		// if given an invalid value, return a valid blank value
+		if(!$value instanceof EventArray) return $this->getBlankValue($page, $field);
+		return $value;
+	}
+
+	/** 
+	 * Given a raw value from DB (arrays), return the value as it would appear in a Page object (EventArray)
+	 *
+	 * @param Page $page
+	 * @param Field $field
+	 * @param array $value
+	 * @return EventArray
+	 *
+	 */
+	public function ___wakeupValue(Page $page, Field $field, $value) {
+																		  
+		// start a blank value to be populated
+		$events = $this->getBlankValue($page, $field); 
+
+		// if we were given a blank value, then we've got nothing to do: just return a blank EventArray
+		if(empty($value) || !is_array($value)) return $events; 
+
+		// create new Event objects from each item in the array
+		foreach($value as $v) {
+			$event = new Event();
+			$event->metacluster = $v['data']; // note we're converting 'data' to metacluster
+			$event->align_start = $v['align_start']; 
+			$event->align_end = $v['align_end']; 
+			$event->resetTrackChanges(); 
+			$events->add($event); 
+		}
+
+		// tell it to start tracking changes from this point forward
+		$events->resetTrackChanges(); 
+
+		return $events;  
+	}
+
+	/**
+	 * Given an EventArray value, convert the value back to an array for storage in DB
+	 *              
+	 * @param Page $page
+	 * @param Field $field
+	 * @param EventArray $value
+	 * @return array
+	 *
+	 */
+	public function ___sleepValue(Page $page, Field $field, $value) {
+
+		$sleepValue = array();
+		if(!$value instanceof EventArray) return $sleepValue; 
+
+		// make the events sort by date ascending
+		$value->sort('align_start'); 
+
+		// convert each Event to an array within sleepValue
+		foreach($value as $event) {
+			
+			// if no date specified then skip it
+			if(!$event->metacluster) continue;
+			
+			// if event is formatted, fail, we don't want entity-encoded text in DB
+
+			if($event->formatted) throw new WireException('Formatted events cannot be saved'); 
+			
+			$sleepValue[] = array(
+				'data' => $event->metacluster, // note: 'metacluster' is becoming 'data' (with an 'a')
+				'align_start' => $event->align_start,
+				'align_end' => $event->align_end
+			); 
+		}
+		
+		return $sleepValue;
+	}
+
+	/**
+	 * Format a value for front-end output
+	 * 
+	 * This is the same as a regular value except that it is a cloned copy with
+	 * the “title” subfields entity encoded for output in markup. 
+	 * 
+	 * @param Page $page
+	 * @param Field $field
+	 * @param EventArray $value
+	 * @return EventArray
+	 *
+	 */
+	public function ___formatValue(Page $page, Field $field, $value) {
+		// make a new copy with formatted events (i.e. entity-encoded titles)
+		$events = $this->getBlankValue($page, $field); 
+		foreach($value as $event) {
+			if(!$event->formatted) {
+				$event = clone $event;
+				// $event->title = $this->sanitizer->entities($event->title);
+				$event->formatted = true;
+			}
+			$events->add($event);
+		}
+		return $events;
+	}
+	
+	/**
+	 * Render a markup string of the value (optional for Fieldtypes to implement)
+	 *
+	 * @param Page $page 
+	 * @param Field $field 
+	 * @param EventArray $value 
+	 * @param string $property Property to render or omit for all
+	 * @return string|MarkupFieldtype
+	 *
+	 */
+	public function ___markupValue(Page $page, Field $field, $value = null, $property = '') {
+		if(!$value instanceof EventArray) $value = $page->get($field->name);
+		if(!$value instanceof EventArray || !$value->count()) return '';
+		$a = [];
+		foreach($value as $event) {
+			/** @var Event $event */
+			if($property) {
+				$a[] = $this->sanitizer->entities1($event->get($property));
+			} else {
+				$a[] = $this->sanitizer->entities1("$event->metacluster: $event->align_start - $event->align_end");
+			}
+		}
+		return "<ul><li>" . implode("</li><li>", $a) . "</li></ul>";
+	}
+
+	/**
+	 * Method called when the field is database-queried from a $pages->find() selector 
+	 * 
+	 * @param DatabaseQuerySelect|PageFinderDatabaseQuerySelect
+	 * @param string $table
+	 * @param string $subfield
+	 * @param string $operator
+	 * @param string $value
+	 * @return PageFinderDatabaseQuerySelect
+	 *
+	 */
+	public function getMatchQuery($query, $table, $subfield, $operator, $value) {
+
+		if($subfield == 'metacluster') {
+			// If searching 'date' then assume our default (data) field 
+			$subfield = 'data';
+		}
+
+		// if($subfield === 'data') {
+			// if searching data, make sure it is in the correct 'date' format
+			// $value = wireDate('Y-m-d', $value);
+			
+		// } else if($subfield === 'title') {
+			// use fulltext search features when searching title
+			// $finder = new DatabaseQuerySelectFulltext($query);
+			// $finder->match($table, $subfield, $operator, $value);
+			// return $query;
+		// }
+
+		return parent::getMatchQuery($query, $table, $subfield, $operator, $value); 
+	}
+
+	/**
+	 * Return array with information about what properties and operators can be used with this field
+	 * 
+	 * This is what is used when finding pages like with Lister/ListerPro, etc. 
+	 * ProcessWire’s default generally gets this right so we often don’t have to implement this method.
+	 * In this case, we are just having it show the correct label for “Date”. 
+	 *
+	 * @param Field $field
+	 * @param array $data Array of extra data, when/if needed
+	 * @return array
+	 *
+	 */
+	public function ___getSelectorInfo(Field $field, array $data = array()) {
+		$info = parent::___getSelectorInfo($field, $data);
+		$info['subfields']['data']['label'] = $this->_('metacluster');
+		return $info;
+	}
+
+}
+

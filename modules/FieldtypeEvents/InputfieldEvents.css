@@ -1,0 +1,30 @@
+.InputfieldEvents tr.EventTemplate {
+	display: none; 
+}
+
+.InputfieldEvents th i {
+	font-size: initial; /* icon in table header */
+}
+
+.InputfieldEvents td {
+	vertical-align: middle;
+}
+
+.InputfieldEvents .EventDelete,
+.InputfieldEvents .EventClone {
+	width: 5%; 
+	text-align: center;
+}
+
+.InputfieldEvents .EventDate {
+	width: 20%; 
+}
+
+.InputfieldEvents .EventTitle {
+	width: 70%; 
+}
+
+.InputfieldEvents .EventTBD i {
+	color: #fff; /* icon when event is TBD (to-be-deleted) */
+}
+
