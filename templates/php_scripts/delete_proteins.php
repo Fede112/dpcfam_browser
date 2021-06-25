@@ -27,6 +27,7 @@ if ($input==="yes"){
 			// echo $i++. " ".$dePage['title']."\n";
 			$dePage->delete();
 			$count +=1;
+			// if ($i%1000 == 0){ $database->commit();$database->beginTransaction();}
 		}
 		$database->commit();
 	} catch(\Exception $e) {

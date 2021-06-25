@@ -1,5 +1,5 @@
 <?php include("_header.php");?>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <?php
 $config->debug = true;
@@ -62,10 +62,11 @@ session_start();
 		<!-- SEARCH RESULTS -->
 		<?php
 		// All queries, independently of the category, will output a set of MCs pages stored in $mc_matches
-		if(isset($_GET["search_input"]) ){ 
-
+		if(isset($_GET["search_input"]) )
+		{ 
 
 			echo "<hr/>"; ?>
+			<section>
 			<!-- DPCfam -->
 			<?php
 			$search_input = $input->get->text("search_input");
@@ -75,7 +76,9 @@ session_start();
 			
 			// array of mc pages which match the search input
 			$mc_matches = new pageArray(); 
-
+			//----------------------
+			// Display DPCfam results
+			//----------------------
 			if($_GET["category"]=="DPCfam"){
 
 				$mc_matches_str = explode(',', $search_input);
@@ -88,178 +91,203 @@ session_start();
   						$mc_matches->add($page);
 					}
 				}
+				
+				// single results
+				if( $mc_matches->count == 1 )
+				{
+
+					$mc_url = $config->urls->httpRoot . "metaclusters/" . $mc_matches[0]->title;
+					// redirect to metacluster page				
+					header("HTTP/1.1 301 Moved Permanently");
+					header("Location: $mc_url");
+					die();
+				}
+			
+				// multiple results
+				elseif ($mc_matches->count > 1) 
+				{
+					//// Hyperlinks ?>
+					<h3><?php echo "Results for " ,$search_input ,":" ?></h3>
+		    		
+					<ul>
+					<?php
+					foreach($mc_matches as $item) { ?>
+	 				   <li><a href="<?php echo $item->url; ?>"><?php echo "MC".$item->title; ?></a></li>
+					<?php 
+					}?>
+					<ul>
+				<?php
+				}
 			}
 
+			//---------------------
+			// Display Pfam results
+			//---------------------
+			if($_GET["category"]=="Pfam"){?>
 
-			if($_GET["category"]=="Pfam"){
+				<h4><?php echo "MCs matching with ".$search_input. " ranked by overlap:" ?></h4>
+				<?php
 				// TODO: implement comma separated protein list
-				$mc_matches = $pages->find("template=metacluster, (pfam_label='$search_input')"); // processwire  selector
+				$mc_matches = $pages->find("template=metacluster, (pfam_da='$search_input'),sort=-pfam_overlap"); // processwire  selector
+  				?>
+				<ol style="margin-top: 25px">
+				<?php
+				foreach($mc_matches as $item) { 
+					if( $mc_matches->count >= 1 ){?>
+						<li style="padding: 1px">
+      					<a href="<?php echo $item->url; ?>"><?php echo "MC".$item->title; ?></a>
+      					<div class="progress" style="width: 10%" data-toggle="tooltip" data-placement="right" title="<?= 'overlap: '. 100*$item->pfam_overlap. "%" ?>">
+							<div class="progress-bar" role="progressbar" aria-valuenow="70"
+							aria-valuemin="0" aria-valuemax="100" style="background:<?=$pfam_eser_colors[$item->pfam_eser]?>; width:<?=100*$item->pfam_overlap?>%">
+							<span class="sr-only"><strong><?= 100*$item->pfam_overlap."%"?></strong></span>
+							</div>
+						</div> 
+  						</li>
+  
+						
+						
+					<?php 
+					}
+
+				}?>
+				</ol>
+			<?php
 			}
 
 
+
+			//---------------------
+			// Display Pfam results
+			//---------------------
 			if($_GET["category"]=="Proteins"){
-				// TODO: search for all mc_matches containing this particular protein
-				// TODO: output mc_matches as PageArray
-				$protein_match = $pages->find("template=protein, title='$search_input')");
-				
-				foreach($protein_match as $protein){
-					foreach ($protein->mcs_in_protein as $region) {
-						$mc_matches->add($pages->findOne("template=metacluster, (title=$region->metacluster)") );	
-					}
-					}
-				
+
+				$protein_page = $pages->get("template=protein, title='$search_input'");
+
+				// echo $protein_match."<br>";
+				// echo $protein_match->count."<br>";
+				if(!($protein_page instanceof NullPage)) 
+				{
+					// redirect to protein page
+					$protein_url = $config->urls->httpRoot . "proteins/" . $protein_page->title;
+					echo $protein_url;
+					header("HTTP/1.1 301 Moved Permanently");
+					header("Location: $protein_url");
+					die();
+				}
 
 			}
 
 			?>
 		    
+			</section>
 
+
+
+			<section>
 		    <?php
-
-			// decide filename based of # of MCs
-			if ($mc_matches->count == 1)
-				$filename = "MC".$mc_matches[0]->name."_seeds.csv";
-			else{
-				$filename = "seeds_".rand().".csv";
-			}
+		    //----------------------
+			// Downloads
+			//----------------------
+				
+		    if( $mc_matches->count > 0 ){ 
+		    	// decide filename based of # of MCs
+				if ($mc_matches->count == 1)
+					$filename = "MC".$mc_matches[0]->name."_seeds.csv";
+				else{
+					$filename = "seeds_".rand().".csv";
+				}?>
+			
 
 		
+				
+				<h4><?php echo "Download query results"; ?></h4>
+				<?php $_SESSION['ids'] = (string) $mc_matches; ?>
+				<ul>
+					<li><a href="<?php echo $config->urls->httpRoot."download/?fasta"; ?>">  seeds_cdhit060.fasta </a></li>
+					<li><a href="<?php echo $config->urls->httpRoot."download/?hmm"; ?>">  models.hmm </a></li>
+				</ul>
+			<?php
+			}?>
+			</section>
 
 			
 
-			////////////////////////			
+
+			<?php 
+			//----------------------
 			// No results from query
-			////////////////////////
+			//----------------------
 			if( $mc_matches->count == 0 ){ ?>
 				<p>No results for that query!</p>
 			
-			<?php }
+			<?php }?>
 
-			////////////////////////
-			// Single result
-			////////////////////////
-			elseif( $mc_matches->count == 1 )
-			{
 
-				$mc_url = $config->urls->httpRoot . "metaclusters/" . $mc_matches[0]->title;
-				// redirect to metacluster page				
-				header("HTTP/1.1 301 Moved Permanently");
-				header("Location: $mc_url");
-				die();
-			?>
-
-		    				
-
-			<?php
-
-			}
 			
-			////////////////////////
-			// Multiple results
-			////////////////////////
-			elseif ($mc_matches->count > 1) 
-			{
-				//// Hyperlinks ?>
-				<h3><?php echo "Results for " ,$search_input ,":" ?></h3>
-	    		
-
-				<?php
-				foreach($mc_matches as $item) { ?>
- 				   <a href="<?php echo $item->url; ?>"><?php echo "MC".$item->title; ?></a><br/>
-
-				<?php } ?>
-
-				<br/>
-				<h4><?php echo "Downloads"; ?></h4>
-				<?php $_SESSION['ids'] = (string) $mc_matches; ?>
-				<a href="<?php echo $config->urls->httpRoot."download/?fasta"; ?>">  seeds_cdhit060.fasta </a><br/>
-				<a href="<?php echo $config->urls->httpRoot."download/?hmm"; ?>">  models.hmm </a><br/>
-
-			<?php 
-			}
 
 
+		<?php
 
-
-			}else 
-			
-			{
-				// NO $search_input!!
-			}
-			?>
-
-
-
-
-
-
-
-
+		}else 
 		
-		<script>
-
-		$(document).ready(function() {
-       	$('#example').dataTable( {
-        "scrollX": true
-       	} );
-     	} );
-		</script>
+		{
+			// NO $search_input!!
+		}
+		?>
 
 
-
-<!--      	<script>
-            document
-                .getElementById('target')
-                .addEventListener('change', function () {
-                    'use strict';
-                    var vis = document.querySelector('.vis'),   
-                        target = document.getElementById(this.value);
-                    if (vis !== null) {
-                        vis.className = 'inv';
-                    }
-                    if (target !== null ) {
-                        target.className = 'vis';
-                    }
-            });
-        </script> -->
-
-
-        <style type="text/css">.inv {
-    display: none;
-} </style>
-        
 
 	</div>
 
 
 
-    
-
-
-
-
-  	<?php
-      // <form>
-      //   <div class="inner-form">
-      //     <div class="input-field first-wrap">
-      //       <div class="input-select">
-      //         <select data-trigger="" name="choices-single-defaul">
-      //           <!-- <option placeholder="">Category</option> -->
-      //           <option>DPCfam</option>
-      //           <option>Pfam</option>
-      //           <option>Proteins</option>
-      //         </select>
-      //       </div>
-      //     </div>
-      //     <div class="input-field second-wrap">
-      //       <input id="search" type="text" placeholder="Enter Keywords?" />
-      //     </div>
-
-      // </form>
-    ?>
-
 </main>
 
+
+
 <?php include("_footer.php");?>
+
+
+
+<script type="text/javascript">
+
+// change placeholder based on select
+$('#target').change(function(){
+    const dbText = $(this).find(':selected').text();
+    
+    $('#search_input').attr('placeholder', function(){
+    	
+    	if (dbText=="DPCfam") {
+        	return "MC1234"
+        }
+        if (dbText=="Pfam") {
+        	return "PF00123"
+        }
+        if (dbText=="Proteins") {
+        	return "A0A009EQY8"
+        }
+        
+    });
+    
+    // change text
+	if (dbText=="DPCfam") {
+		$('#search_inputHelp').text( "Enter single query or comma separated values.");
+    }
+    if (dbText=="Pfam") {
+    	$('#search_inputHelp').text("Enter single query.");
+    }
+    if (dbText=="Proteins") {
+    	$('#search_inputHelp').text("Enter single UniProt code.");
+    }
+  // trigger change on page load to set initial placeholder
+}).change()
+</script>
+
+
+
+
+
+
+
 
 

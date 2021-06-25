@@ -1,0 +1,36 @@
+/*  
+"myblue = (102/255,204/255,255/255)\n",
+"mypink = (255/255,153/255,204/255)\n",
+"mygreen = (102/255,255/255,153/255)\n",
+"mybeige = (250/255,240/255,230/255)"
+*/
+
+td.extended {
+    font-weight: bold;
+    color: rgb(255,153,204);
+}
+
+td.shifted {
+    font-weight: bold;
+    color: rgb(82,235,133);
+}
+
+td.reduced {
+    font-weight: bold;
+    color: rgb(102,204,255);
+}
+
+td.equivalent {
+    font-weight: bold;
+    color: #ECD43F;
+}
+
+td.None {
+    font-weight: bold;
+    color: black;
+}
+
+.my_class{
+   border-right: 2px dotted black;
+   /*background: grey;*/
+}

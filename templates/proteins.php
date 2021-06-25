@@ -4,9 +4,10 @@
 <main class="flex-shrink-0">
 	<div class="container">	
 		
-	<h1>Proteins</h1>
+	<!-- <h1>Proteins</h1> -->
 	<?php
-	echo "test";
+	$session->redirect('/'); 
+	// echo "test";
 	// foreach ($page->children() as $child) {
 	    // echo "<a href='$child->url'>$child->title</a><br>";
 	    // echo 'test';

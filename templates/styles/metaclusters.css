@@ -1,0 +1,43 @@
+/*.MarkupPagerNav {
+        clear: both;
+        margin: 1em 0;
+        font-family: Arial, sans-serif;
+}
+.MarkupPagerNav li {
+  display: inline;
+  list-style: none;
+  margin: 0;
+}
+
+.MarkupPagerNav li a,
+.MarkupPagerNav li.MarkupPagerNavSeparator {
+  display: block;
+  float: left;
+  padding: 2px 9px;
+  color: #fff;
+  background: #2f4248;
+  margin-right: 3px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.MarkupPagerNav li.MarkupPagerNavOn a,
+.MarkupPagerNav li a:hover {
+  color: #fff;
+  background: #db1174;
+  text-decoration: none;
+}
+
+.MarkupPagerNav li.MarkupPagerNavSeparator {
+  display: inline;
+  color: #777;
+  background: #d2e4ea;
+  padding-left: 3px;
+  padding-right: 3px;
+}*/
+
+/*.active{
+        background: black;
+        color: white;
+      }*/

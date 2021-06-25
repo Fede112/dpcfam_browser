@@ -1,15 +1,13 @@
 <?php
 
-
-
 session_start();
-
 
 $mc_matches_ids = $_SESSION['ids'];
 // TODO: check if searching by page-id is faster (thats my assumption)
 $mc_matches = $pages->find("id=$mc_matches_ids"); 
 
 $temp_dir = $files->tempDir('downloads');
+// echo $temp_dir."<br>";
 $temp_dir->setRemove(false);
 $temp_dir->removeExpiredDirs(dirname($temp_dir), $config->erase_tmpfiles); // remove dirs older than $config->erase_tmpfiles seconds
 
@@ -26,12 +24,17 @@ if(isset($_GET['hmm']))
 }
 
 
+
 $matches_path = array();
 foreach($mc_matches as $item)
 {
+    echo $item->$page_path_prop . "<br>";
 	array_push($matches_path,$item->$page_path_prop);
 	// array_push($matches_hmm_path,$item->hmm_path);
 }
+
+echo $zip_file."<br>";
+echo $matches_path."<br>";
 
 // create zip
 $result_zip = $files->zip($zip_file, $matches_path);
@@ -39,7 +42,8 @@ $result_zip = $files->zip($zip_file, $matches_path);
 
 
 
-if (headers_sent()) {
+if (headers_sent()) 
+{
     echo 'HTTP header already sent';
 } else {
     if (!is_file($zip_file)) {
@@ -58,7 +62,6 @@ if (headers_sent()) {
         exit;
     }
 }
-
 
 
 

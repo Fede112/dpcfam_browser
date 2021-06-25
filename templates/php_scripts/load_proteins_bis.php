@@ -7,7 +7,9 @@ namespace ProcessWire;
 include("../../../index.php"); // bootstrap ProcessWire
 
 $folder = "data_website/proteins/";
-$file = $config->paths->assets . $folder . "dpcfam-pfam_protein_labels_test";
+$proteins_file = $config->paths->assets . $folder . "protein_lengths_test.txt";
+$dpcfam_file = $config->paths->assets . $folder . "dpcfam_label_test.txt";
+$pfam_file = $config->paths->assets . $folder . "pfam_label_test.txt";
 
 $input = readline('Sure you want to upload proteins from '.$file.'? (yes/no): '.PHP_EOL);
 if ($input!=="yes"){
@@ -16,17 +18,16 @@ if ($input!=="yes"){
 }
 $trans_size = readline('Size of transaction: '.PHP_EOL);
 
-// echo "transaction size: ". $trans_size;
 
 echo "Loading file {$file}\n";
 
-$handle = fopen($file, "r");
+$handle = fopen($proteins_file, "r");
 if(!$handle) {echo "Error, file not opened correctly!";exit();}
 
 $time_ini = microtime(true);
 $time_pre = $time_ini;
 
-$title_prev = "";
+$index_prev = -1;
 $header_rows = 0;
 
 try {
@@ -35,14 +36,14 @@ try {
     $parent = $pages->get('template=proteins'); 
     $database->beginTransaction();
 
+    
     for ($i = 0; $row = fgetcsv($handle, 0, " "); ++$i) 
     {
-
         if ($row[0][0] === "#"){$header_rows++;continue;}
 
 
         $title          = $row[0];
-        $index          = $row[1]; // signals if it is MC or PF
+        $index          = $row[1];
         $align_start    = $row[2];
         $align_end      = $row[3];
         $family         = $row[4];
@@ -52,7 +53,7 @@ try {
         // TODO: add check to verify no data was previously loaded 
         // (not included now to reduce loading time) 
         // HOWTO: if( $pages->count("template=protein, name=$title") == 0){
-        if ($title !== $title_prev)
+        if ($index !== $index_prev)
         {
             $page = new Page();
             $page->template       = $template;
@@ -64,10 +65,9 @@ try {
 
 
         $label = new Event();
-        $label->metacluster = $family;
+        $label->family = $family;
         $label->align_start = $align_start;
         $label->align_end  =  $align_end;
-
         if ($row[1]=="PF") {
             $page->pfam_protein_labels->add($label);
         }
@@ -77,7 +77,7 @@ try {
 
         $page->save();
 
-        $title_prev=$title;
+        $index_prev=$index;
         
         if (($i+1-$header_rows)%$trans_size == 0)
         {

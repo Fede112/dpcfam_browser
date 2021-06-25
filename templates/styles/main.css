@@ -1,4 +1,13 @@
 /* blank */
+
+
+/*ol {counter-reset: item;}
+ol li {display: block;}
+ol li:before {content: counter(item) ". "; counter-increment: item; font-weight: bold;}
+*/
+/* remove underlines from URL*/
+a { text-decoration: none; }
+
 .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;

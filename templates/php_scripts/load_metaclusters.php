@@ -7,7 +7,7 @@ namespace ProcessWire;
 include("../../../index.php"); // bootstrap ProcessWire
 
 $folder = "data_website/metadata/";
-$file = $config->paths->assets . $folder . "mc_statistics_test.txt";
+$file = $config->paths->assets . $folder . "metadata.txt";
 
 $input = readline('Sure you want to upload metaclusters from '.$file.'? (yes/no): '.PHP_EOL);
 if ($input!=="yes"){
@@ -45,12 +45,15 @@ try {
         $size                   = $row[1];
         $len_avg                = $row[2];
         $len_std                = $row[3];
-        $pfam_label             = $row[4];
-        $pfam_fracDA            = $row[5];
-        $pfam_eser              = $row[6];
-        $size_uref_ukb          = $row[7];
-        $pfam_overlap           = $row[8];
-        $pfam_eser              = $row[9];
+        $lc                     = 100*$row[4];
+        $cc                     = 100*$row[5];
+        $dis                    = 100*$row[6];
+        $tm                     = $row[7];
+        $pfam_da                = $row[8];
+        $pfam_da_frac           = $row[9];
+        $size_uref_ukb          = $row[10];
+        $pfam_overlap           = $row[11];
+        $pfam_eser              = $row[12];
         
         # auxiliary
         if($title>500000){
@@ -60,14 +63,16 @@ try {
         }
         $sub_dir = "dir_".$dir_num;
         $fasta_filename = "MC".$title . "_cdhit.fasta"; 
+        $msa_filename = "MC".$title . "_cdhit.msa"; 
         $hmm_filename = "MC".$title. ".hmm";
 
 
         # derived fields
         $fasta_path = $config->paths->bulkfiles. "fasta/".$sub_dir."/".$fasta_filename;
-        $hmm_path = $config->paths->bulkfiles. "hmms/".$sub_dir."/".$hmm_filename;
-        if ($pfam_label=="UNK"){
-            $pfam_label = "None";
+        $hmm_path = $config->paths->bulkfiles. "hmm/".$sub_dir."/".$hmm_filename;
+        $msa_path = $config->paths->bulkfiles. "msa/".$sub_dir."/".$msa_filename;
+        if ($pfam_da=="UNK"){
+            $pfam_da = "None";
         }
         
         // if( $pages->count("template=metacluster, name=$title") == 0){
@@ -81,11 +86,17 @@ try {
             $page->size              = $size;
             $page->len_avg           = $len_avg;
             $page->len_std           = $len_std;
+            $page->lc                = $lc;
+            $page->cc                = $cc;
+            $page->dis               = $dis;
+            $page->tm                = $tm;
+
             $page->size_uref_ukb     = $size_uref_ukb;
             $page->fasta_path        = $fasta_path;
+            $page->msa_path          = $msa_path;
             $page->hmm_path          = $hmm_path;
-            $page->pfam_label        = $pfam_label;
-            $page->pfam_fracDA       = $pfam_fracDA;
+            $page->pfam_da           = $pfam_da;
+            $page->pfam_da_frac      = $pfam_da_frac;
             $page->pfam_overlap      = $pfam_overlap;
             $page->pfam_eser         = $pfam_eser;
             $page->save();
