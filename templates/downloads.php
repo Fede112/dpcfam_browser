@@ -5,7 +5,7 @@
 
 		<h1 class="mt-5"><?php echo $page->title; ?></h1>
 
-		<div style="padding: 25px 0px 25px 0px;">
+		<div style="padding: 25px 0px 0px 0px;">
 		<?= $page->body; ?>
 		</div>
 
