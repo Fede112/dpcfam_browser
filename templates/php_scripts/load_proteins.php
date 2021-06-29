@@ -7,7 +7,7 @@ namespace ProcessWire;
 include("../../../index.php"); // bootstrap ProcessWire
 
 $folder = "data_website/proteins/";
-$file = $config->paths->assets . $folder . "dpcfam-pfam_protein_labels_test";
+$file = $config->paths->assets . $folder . "dpcfam-pfam_protein_labels.txt";
 
 $input = readline('Sure you want to upload proteins from '.$file.'? (yes/no): '.PHP_EOL);
 if ($input!=="yes"){

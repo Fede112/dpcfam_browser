@@ -62,7 +62,7 @@ if ($input==="yes"){
 	// $m = memory_get_usage();
 	// echo $count."\n";
 	echo "Average pages deleted per second: " . round($count/$dt, 3). "\n";
-	echo "Total pages deleted: " . $count - 1. "\n";
+	echo "Total pages deleted: " . $count - 1 . "\n";
 }
 
 ?>
