@@ -24,6 +24,7 @@
 				
 				$colors = array("#FF6384", "#36A2EB", "#4BC0C0", "#7B83EB","#FFCE5C");
 
+				// $colors = array("rgba(255, 99, 132, .90)", "rgba(54, 162, 235, .90)", "rgba(75, 192, 192, .90)", "rgba(123, 131, 235, .90)","rgba(255, 206, 92, .90)");
 				
 				# decide size of diagram and dict color
 				$diag_min = 100000;
@@ -66,28 +67,6 @@
 
 				$diag_len = $diag_max - 0 + 10;
 
-				#--------------------
-				# plot dpcfam domains
-				#--------------------
-				if (count($page->protein_labels)>=1){
-
-					$index = 0;
-					foreach ($page->protein_labels as $label) {
-						$domain_len = ($label->align_end - $label->align_start + 1); 
-						$domain_len_perc = 100*$domain_len/$diag_len;
-						$family = "MC".$label->metacluster;
-						?>
-
-						<div class="dpcfam_box" style="left:<?= 100*($label->align_start)/$diag_len."%;";?> width:calc(<?= $domain_len_perc ."%"?>); background:<?= $dpcfam_color[$family];?>" title="<?= $family  ."&#13;start: ". $label->align_start ."&#13;end: ".$label->align_end;?>"><div class="wrapper"><?= $family ?></div></div>
-
-
-						<?php $index++;?>
-
-
-					<?php }
-
-				}
-
 				?>
 
 				
@@ -111,7 +90,30 @@
 				?>
 
 
+				<?php
+				#--------------------
+				# plot dpcfam domains
+				#--------------------
+				if (count($page->protein_labels)>=1){
 
+					$index = 0;
+					foreach ($page->protein_labels as $label) {
+						$domain_len = ($label->align_end - $label->align_start + 1); 
+						$domain_len_perc = 100*$domain_len/$diag_len;
+						$family = "MC".$label->metacluster;
+						?>
+
+						<div class="dpcfam_box" style="left:<?= 100*($label->align_start)/$diag_len."%;";?> width:calc(<?= $domain_len_perc ."%"?>); background:<?= $dpcfam_color[$family];?>" title="<?= $family  ."&#13;start: ". $label->align_start ."&#13;end: ".$label->align_end;?>"><div class="wrapper"><?= $family ?></div></div>
+
+
+						<?php $index++;?>
+
+
+					<?php }
+
+				}
+
+				?>
 
 
 				<?php
@@ -224,6 +226,7 @@
   			}
   			for(i = 0; i < pfam_label.length; i++) {
     			pfam_label[i].style.opacity = '.9';
+    			pfam_label[i].style.visibility = 'visible';
   			}
 	    }
 	    else
@@ -231,6 +234,7 @@
 	    	// console.log("non checked!")
 	    	for(i = 0; i < pfam_label.length; i++) {
     			pfam_label[i].style.opacity = '0';
+    			pfam_label[i].style.visibility = 'hidden';
   			}
 	    	for(i = 0; i < dpcfam_label.length; i++) {
     			dpcfam_label[i].style.top = '0%';

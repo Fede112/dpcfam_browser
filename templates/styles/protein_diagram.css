@@ -45,6 +45,11 @@ section {
   transition: all 1s ease 0s;
 }
 
+/*div.dpcfam_box:hover {
+  opacity: .8;
+}
+*/
+
 .pfam_box {
   text-overflow: ellipsis; 
   height: calc(100%);
@@ -55,6 +60,7 @@ section {
   border-radius: 12px; /* one half of ( (border * 2) + height + padding ) */
   opacity: 0;
   transition: all 1s ease 0s;
+  visibility: hidden;
   /*box-shadow: 1px 1px 1px black;*/
   /*opacity: 95%;*/
 }

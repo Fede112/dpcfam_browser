@@ -160,19 +160,22 @@ session_start();
 			// Display Pfam results
 			//---------------------
 			if($_GET["category"]=="Proteins"){
+				$options = array();
+				$options['findIDs'] = 1;
+				$options['findOne'] = true;
+				$protein_page = $pages->find("template=protein, title='$search_input'", $options);
+				// $protein_page = $pages->get("template=protein, title='$search_input'");
 
-				$protein_page = $pages->get("template=protein, title='$search_input'");
-
-				// echo $protein_match."<br>";
-				// echo $protein_match->count."<br>";
-				if(!($protein_page instanceof NullPage)) 
+				// if(!($protein_page instanceof NullPage)) 
+				if(($protein_page > 0)) 
 				{
 					// redirect to protein page
-					$protein_url = $config->urls->httpRoot . "proteins/" . $protein_page->title;
-					echo $protein_url;
-					header("HTTP/1.1 301 Moved Permanently");
-					header("Location: $protein_url");
-					die();
+					$protein_url = $config->urls->httpRoot . "proteins/" . $search_input;
+					$session->redirect($protein_url);
+					// echo $protein_url;
+					// header("HTTP/1.1 301 Moved Permanently");
+					// header("Location: $protein_url");
+					// die();
 				}
 
 			}
@@ -264,7 +267,7 @@ $('#target').change(function(){
         	return "PF00123"
         }
         if (dbText=="Proteins") {
-        	return "A0A009EQY8"
+        	return "A0A009EE19"
         }
         
     });
