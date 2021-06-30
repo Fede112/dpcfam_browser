@@ -2,8 +2,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <?php
-$config->debug = true;
-session_start();
+
+
+if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
+    // session isn't started
+    session_start();
+}
+
 
 
 

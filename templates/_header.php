@@ -20,10 +20,10 @@
   <?php
   // Global variables
   $pfam_eser_colors = array(
-    extended=>"rgb(255,153,204)",
-    shifted=>"rgb(82,235,133)",
-    reduced=>"rgb(102,204,255)",
-    equivalent=>"#ECD43F"
+    'extended'=>"rgb(255,153,204)",
+    'shifted'=>"rgb(82,235,133)",
+    'reduced'=>"rgb(102,204,255)",
+    'equivalent'=>"rgb(236, 212, 63)"
     )
   ?>
 
