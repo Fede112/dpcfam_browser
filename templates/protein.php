@@ -103,8 +103,8 @@
 						$family = "MC".$label->metacluster;
 						?>
 
+						<div class="dpcfam_white_box" style="left:<?= 100*($label->align_start)/$diag_len."%;";?> width:calc(<?= $domain_len_perc ."%"?>);?>"><div class="wrapper"><?= "" ?></div></div>
 						<div class="dpcfam_box" style="left:<?= 100*($label->align_start)/$diag_len."%;";?> width:calc(<?= $domain_len_perc ."%"?>); background:<?= $dpcfam_color[$family];?>" title="<?= $family  ."&#13;start: ". $label->align_start ."&#13;end: ".$label->align_end;?>"><div class="wrapper"><?= $family ?></div></div>
-
 
 						<?php $index++;?>
 
@@ -215,11 +215,16 @@
 	    var pfam_chkBox = document.getElementById('pfamCheckbox');
 	    var dpcfam_chkBox = document.getElementById('dpcfamCheckbox');
 	    var dpcfam_label = document.getElementsByClassName('dpcfam_box');
+	    var dpcfam_white_label = document.getElementsByClassName('dpcfam_white_box');
 	    var pfam_label = document.getElementsByClassName('pfam_box');
 	    
 	    if (pfam_chkBox.checked)
 	    {
 	    	// console.log("checked!")
+	    	for(i = 0; i < dpcfam_white_label.length; i++) {
+    			dpcfam_white_label[i].style.top = '-50%';
+    			// dpcfam_white_label[i].style.opacity = '.9';
+  			}
   			for(i = 0; i < dpcfam_label.length; i++) {
     			dpcfam_label[i].style.top = '-50%';
     			dpcfam_label[i].style.opacity = '.9';
@@ -232,14 +237,21 @@
 	    else
 	    {
 	    	// console.log("non checked!")
+	    	
 	    	for(i = 0; i < pfam_label.length; i++) {
     			pfam_label[i].style.opacity = '0';
     			pfam_label[i].style.visibility = 'hidden';
   			}
+	    	for(i = 0; i < dpcfam_white_label.length; i++) {
+    			dpcfam_white_label[i].style.top = '0%';
+    			// dpcfam_white_label[i].style.opacity = '.95';
+  			}
+  			
 	    	for(i = 0; i < dpcfam_label.length; i++) {
     			dpcfam_label[i].style.top = '0%';
-    			dpcfam_label[i].style.opacity = '1';
+    			dpcfam_label[i].style.opacity = '.9';
   			}
+  			
 	    	
 	    }
 	}

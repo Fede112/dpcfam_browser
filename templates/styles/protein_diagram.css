@@ -41,8 +41,23 @@ section {
   /*border: 2px solid black;*/
   border-radius: 12px; /* one half of ( (border * 2) + height + padding ) */
   /*box-shadow: 1px 1px 1px black;*/
-  opacity: 1;
+  opacity: .9;
   transition: all 1s ease 0s;
+  z-index: 3;
+}
+
+
+.dpcfam_white_box {
+  text-overflow: ellipsis; 
+  height: calc(100%);
+  position: absolute;
+  min-width: 5%;
+  top: 0%;
+  background: white;
+  border-radius: 12px; /* one half of ( (border * 2) + height + padding ) */
+  transition: all 1s ease 0s;
+  /*box-shadow: 1px 1px 1px black;*/
+  z-index: 2;
 }
 
 /*div.dpcfam_box:hover {
@@ -74,6 +89,7 @@ section {
     height:2px;
     top: 50%;
     width: 100%;
+    z-index: 1;
     /*opacity: 50%;*/
     /*left: 10%;*/
 }

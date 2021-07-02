@@ -168,7 +168,11 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 				$options = array();
 				$options['findIDs'] = 1;
 				$options['findOne'] = true;
+
+				$time_ini = microtime(true);
 				$protein_page = $pages->find("template=protein, title='$search_input'", $options);
+				$time_pos = microtime(true);
+				echo "search time: " . round($trans_size/$dt, 3). "\n";
 				// $protein_page = $pages->get("template=protein, title='$search_input'");
 
 				// if(!($protein_page instanceof NullPage)) 
@@ -211,8 +215,9 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 				<h4><?php echo "Download query results"; ?></h4>
 				<?php $_SESSION['ids'] = (string) $mc_matches; ?>
 				<ul>
-					<li><a href="<?php echo $config->urls->httpRoot."download/?fasta"; ?>">  seeds_cdhit060.fasta </a></li>
-					<li><a href="<?php echo $config->urls->httpRoot."download/?hmm"; ?>">  models.hmm </a></li>
+					<li><a href="<?php echo $config->urls->httpRoot."download/?fasta"; ?>">  seeds_cdhit060.zip </a></li>
+					<li><a href="<?php echo $config->urls->httpRoot."download/?msa"; ?>">  MSAs.zip </a></li>
+					<li><a href="<?php echo $config->urls->httpRoot."download/?hmm"; ?>">  HMMs.zip </a></li>
 				</ul>
 			<?php
 			}?>

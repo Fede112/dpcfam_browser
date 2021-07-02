@@ -70,9 +70,9 @@ else{
 
 
 <?php 
-$fasta_path = $page->fasta_path;
-$fasta_fileurl = path2url($fasta_path);
-$fasta_filename = basename($fasta_path);
+$cdhit_path = $page->cdhit_path;
+$cdhit_fileurl = path2url($cdhit_path);
+$cdhit_filename = basename($cdhit_path);
 
 $msa_path = $page->msa_path;
 $msa_fileurl = path2url($msa_path);
@@ -84,12 +84,12 @@ $hmm_filename = basename($hmm_path);
 ?>
 
 <?php
-if (file_exists($fasta_path)){ ?>
-	Seeds: <a href="<?php echo $fasta_fileurl; ?>" download=<?php echo $fasta_filename; ?>> <?php echo $fasta_filename; ?> </a><br/>
+if (file_exists($cdhit_path)){ ?>
+	Seeds (cdhit 60%): <a href="<?php echo $cdhit_fileurl; ?>" download=<?php echo $cdhit_filename; ?>> <?php echo $cdhit_filename; ?> </a><br/>
 <?php
 }else
 { ?>
-	Seeds (cdhit 0.60): Not available <br/>
+	Seeds (cdhit 60%): Not available <br/>
 
 <?php 
 }
@@ -131,14 +131,14 @@ if (file_exists($hmm_path))
 
 ?>
 <hr/>
-<h4><?php echo "Sequences list"; ?></h4>
+<h4><?php echo "Sequences list (cdhit 60%)"; ?></h4>
 
 
 <?php // $protein_matches = $pages->find("template=protein, mcs_in_protein.metacluster={$page->title})"); ?>
 
-<!-- <?php  print_r($protein_matches) ?> -->
 
-<?php if (file_exists($fasta_path)){?>
+
+<?php if (file_exists($cdhit_path)){?>
 <table id="protein_table" border = '2'>
 		<tr>
 		<th>Protein</th>
@@ -150,7 +150,7 @@ if (file_exists($hmm_path))
 
 
 
-		$file = fopen($fasta_path, 'r');
+		$file = fopen($cdhit_path, 'r');
 		
 		$index = 0;
 		while (($line = fgetcsv($file, 1000, '|')) !== FALSE) {

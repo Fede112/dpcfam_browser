@@ -15,7 +15,12 @@ $temp_dir->removeExpiredDirs(dirname($temp_dir), $config->erase_tmpfiles); // re
 if(isset($_GET['fasta']))
 {
 	$zip_file = $temp_dir . "fasta_cdhit60.zip";
-	$page_path_prop = "fasta_path"; // to decide which path to retrieve from page
+	$page_path_prop = "cdhit_path"; // to decide which path to retrieve from page
+}
+if(isset($_GET['msa']))
+{
+    $zip_file = $temp_dir . "msas.zip";
+    $page_path_prop = "msa_path"; // to decide which path to retrieve from page
 }
 if(isset($_GET['hmm']))
 {

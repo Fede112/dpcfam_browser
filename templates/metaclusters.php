@@ -1,9 +1,7 @@
-
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
-<link rel="stylesheet" href="<?php echo $config->urls->templates ?>styles/metaclusters.css">
-<link rel="stylesheet" href="<?php echo $config->urls->templates ?>styles/dt.css">
 <?php include("_header.php");?>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="<?php echo $config->urls->templates ?>styles/dt.css">
 <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"> -->
 
 <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"> </script>
