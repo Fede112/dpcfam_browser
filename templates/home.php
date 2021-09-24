@@ -42,7 +42,10 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 				</select>
 
 				<?php $value = isset($_GET["search_input"]) ? $_GET["search_input"]: ''; ?>
+				
 			    <input type="search" class="form-control form-control-lg" name="search_input" id="search_input" placeholder="MC1234" aria-describedby="search_inputHelp" value="<?php echo $value?>">
+
+			    <!-- <img  class="loader_anim" style="float:right;" id='loading' width="100px" src="http://rpg.drivethrustuff.com/shared_images/ajax-loader.gif"/>  -->
 
 				<button type="submit" class="btn btn-primary">
 					<svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -162,7 +165,7 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 
 
 			//---------------------
-			// Display Pfam results
+			// Display Proteins results
 			//---------------------
 			if($_GET["category"]=="Proteins"){
 				$options = array();
@@ -202,12 +205,7 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 			//----------------------
 				
 		    if( $mc_matches->count > 0 ){ 
-		    	// decide filename based of # of MCs
-				if ($mc_matches->count == 1)
-					$filename = "MC".$mc_matches[0]->name."_seeds.csv";
-				else{
-					$filename = "seeds_".rand().".csv";
-				}?>
+		    ?>
 			
 
 		
@@ -215,9 +213,9 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 				<h4><?php echo "Download query results"; ?></h4>
 				<?php $_SESSION['ids'] = (string) $mc_matches; ?>
 				<ul>
-					<li><a href="<?php echo $config->urls->httpRoot."download/?fasta"; ?>">  seeds_cdhit060.zip </a></li>
-					<li><a href="<?php echo $config->urls->httpRoot."download/?msa"; ?>">  MSAs.zip </a></li>
-					<li><a href="<?php echo $config->urls->httpRoot."download/?hmm"; ?>">  HMMs.zip </a></li>
+					<li><a href="<?= $config->urls->httpRoot."download/?fasta"; ?>">  seeds_cdhit060.zip </a></li>
+					<li><a href="<?= $config->urls->httpRoot."download/?msa"; ?>">  MSAs.zip </a></li>
+					<li><a href="<?= $config->urls->httpRoot."download/?hmm"; ?>">  HMMs.zip </a></li>
 				</ul>
 			<?php
 			}?>

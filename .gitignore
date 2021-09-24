@@ -1,3 +1,5 @@
-assets/
+assets/*
+install/*
+modules/*
 config.php
 .htaccess

@@ -39,13 +39,14 @@ foreach($mc_matches as $item)
 }
 
 echo $zip_file."<br>";
-echo $matches_path."<br>";
-
+print_r($matches_path);//."<br>";
+echo basename($zip_file)."<br>";
 // create zip
 $result_zip = $files->zip($zip_file, $matches_path);
 
 
-
+// clean output buffer before sending header
+ob_clean();
 
 if (headers_sent()) 
 {
