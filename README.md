@@ -4,7 +4,7 @@ Web application to provide basic navigation tools to query the DPCfam dataset.
 The app was developed using the content manager ProcessWire and MySQL (with InnoDB engine).
 Latest version supports querying the system using MCs, Pfam families or UniProt ids.
 
-The webpage is currently currently online at: [dpcfam.areasciencepark.it](dpcfam.areasciencepark.it)
+The webpage is currently currently online at: [dpcfam.areasciencepark.it](https://dpcfam.areasciencepark.it)
 
 
 ### TODO:
