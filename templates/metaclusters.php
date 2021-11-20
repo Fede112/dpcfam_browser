@@ -81,6 +81,7 @@ $(document).ready(function() {
     	// /var/www/html/dpcfam_innodb/site/assets/data_website/metadata/metadata.json
         "ajax": "../site/assets/data_website/metadata/metadata.json",
         "cache": true,
+        "deferRender": true,
         // "createdRow": function ( row, data, index ) {
             // $('td', row).eq(10).addClass(row[10]);
     	// }, 	

@@ -43,7 +43,7 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 
 				<?php $value = isset($_GET["search_input"]) ? $_GET["search_input"]: ''; ?>
 				
-			    <input type="search" class="form-control form-control-lg" name="search_input" id="search_input" placeholder="MC1234" aria-describedby="search_inputHelp" value="<?php echo $value?>">
+			    <input type="search" class="form-control form-control-lg" name="search_input" id="search_input" placeholder="MC194" aria-describedby="search_inputHelp" value="<?php echo $value?>">
 
 			    <!-- <img  class="loader_anim" style="float:right;" id='loading' width="100px" src="http://rpg.drivethrustuff.com/shared_images/ajax-loader.gif"/>  -->
 
@@ -269,7 +269,7 @@ $('#target').change(function(){
     $('#search_input').attr('placeholder', function(){
     	
     	if (dbText=="DPCfam") {
-        	return "MC1234"
+        	return "MC194"
         }
         if (dbText=="Pfam") {
         	return "PF00123"

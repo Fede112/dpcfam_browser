@@ -62,12 +62,14 @@ try {
             $dir_num=intdiv((int)$title,100000)+1;
         }
         $sub_dir = "dir_".$dir_num;
+        $fasta_filename = "MC".$title . ".fasta"; 
         $cdhit_filename = "MC".$title . "_cdhit.fasta"; 
         $msa_filename = "MC".$title . ".msa"; 
         $hmm_filename = "MC".$title. ".hmm";
 
 
         # derived fields
+        $fasta_path = $config->paths->bulkfiles. "fasta/".$sub_dir."/".$fasta_filename;
         $cdhit_path = $config->paths->bulkfiles. "cdhit/".$sub_dir."/".$cdhit_filename;
         $hmm_path = $config->paths->bulkfiles. "hmm/".$sub_dir."/".$hmm_filename;
         $msa_path = $config->paths->bulkfiles. "msa/".$sub_dir."/".$msa_filename;
@@ -92,6 +94,7 @@ try {
             $page->tm                = $tm;
 
             $page->size_uref_ukb     = $size_uref_ukb;
+            $page->fasta_path        = $fasta_path;
             $page->cdhit_path        = $cdhit_path;
             $page->msa_path          = $msa_path;
             $page->hmm_path          = $hmm_path;

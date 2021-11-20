@@ -70,6 +70,10 @@ else{
 
 
 <?php 
+$fasta_path = $page->fasta_path;
+$fasta_fileurl = path2url($fasta_path);
+$fasta_filename = basename($fasta_path);
+
 $cdhit_path = $page->cdhit_path;
 $cdhit_fileurl = path2url($cdhit_path);
 $cdhit_filename = basename($cdhit_path);
@@ -81,6 +85,18 @@ $msa_filename = basename($msa_path);
 $hmm_path = $page->hmm_path;
 $hmm_fileurl = path2url($hmm_path);
 $hmm_filename = basename($hmm_path);
+?>
+
+<?php
+if (file_exists($fasta_path)){ ?>
+	Seeds: <a href="<?php echo $fasta_fileurl; ?>" download=<?php echo $fasta_filename; ?>> <?php echo $fasta_filename; ?> </a><br/>
+<?php
+}else
+{ ?>
+	Seeds: Not available <br/>
+
+<?php 
+}
 ?>
 
 <?php
