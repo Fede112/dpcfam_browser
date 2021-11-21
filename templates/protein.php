@@ -153,8 +153,9 @@
 	<table class="table table-bordered table-striped" style="width: 60%;">
 	  <thead>
 	    <tr>
+	      <th style="width: 12%;">Plot</th>
 	      <th style="width: 40%;">DPCfam domains</th>
-	      <th style="width: 40%;">Range</th>
+	      <th style="width: 36%;">Range</th>
 	      <th style="width: 20%;text-align: left;">DPCfam web</th>
 	    </tr>
 	  </thead>
@@ -162,6 +163,9 @@
 	  	<?php foreach($page->protein_labels as $label){ 
 			$family = "MC".$label->metacluster;?>
 	    	<tr>
+		      <td style="text-align: center; vertical-align: middle;"><input class="form-check-input" type="checkbox" id="pfamCheckbox" value="option1" checked onclick="checkAddress()" <?= $pfam_disabled?>>
+				  <label class="form-check-label" for="pfamCheckbox"></label>
+			  </td>
 		      <td><?= $family?></td>
 		      <td><?= $label->align_start."-".$label->align_end;?></td>
 
@@ -183,8 +187,9 @@
 		<table class="table table-bordered table-striped" style="width: 72%;">
 		  <thead>
 		    <tr>
+		      <th style="width: 4%;">Plot</th>
 		      <th style="width: 24%;">Pfam domains</th>
-		      <th style="width: 24%;">Range</th>
+		      <th style="width: 20%;">Range</th>
 		      <th style="width: 12%;text-align: left;">DPCfam web</th>
 		      <th style="width: 12%;text-align: left;">Pfam web</th>
 		    </tr>
@@ -193,6 +198,7 @@
 		  	<?php foreach($page->pfam_protein_labels as $label){ 
 				$family = "PF".str_pad($label->metacluster,5,"0",STR_PAD_LEFT);?>
 		    	<tr>
+	    		  <td>Placeholder</td>
 			      <td><?= $family?></td>
 			      <td ><?= $label->align_start."-".$label->align_end;?></td>
 			      <td style=" text-align: left;"><a href="<?=$pages->get(1)->url."?category=Pfam&search_input=".$family;?>" target="_blank"> <?php echo "search" ?>

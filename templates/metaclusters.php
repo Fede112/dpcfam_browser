@@ -94,13 +94,19 @@ $(document).ready(function() {
 	            // `data` option, which defaults to the column being worked with, in
 	            // this case `data: 0`.
 	            "render": function ( data, type, row ) {
+	            	if ( type === 'display') {
 	                return '<a href="' + data + '">' + 'MC' + data + '</a>';
+	                }
+	                // sort based on numbers (trick based on orthogonal data: 
+	                // https://datatables.net/manual/data/orthogonal-data)
+	                else{
+	                	return data;
+	                }
+
 	            },
 	            "targets": 0
 
-	        },
-        	// sort based on numbers
-        	{ "type": 'natural', targets: 0 },
+	        },        	
         	// { "visible": false,  "targets": [ 3 ] }
         	{
  				"createdCell": function (td, cellData, rowData, row, col) {
