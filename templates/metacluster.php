@@ -147,14 +147,14 @@ if (file_exists($hmm_path))
 
 ?>
 <hr/>
-<h4><?php echo "Sequences list (cdhit 60%)"; ?></h4>
+<h4><?php echo "Sequences list"; ?></h4>
 
 
 <?php // $protein_matches = $pages->find("template=protein, mcs_in_protein.metacluster={$page->title})"); ?>
 
 
 
-<?php if (file_exists($cdhit_path)){?>
+<?php if (file_exists($fasta_path)){?>
 <table id="protein_table" border = '2'>
 		<tr>
 		<th>Protein</th>
