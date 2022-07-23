@@ -177,6 +177,7 @@ function pfam_da_split($pfam_da) {
 	$cdhit_fileurl = path2url($cdhit_path);
 	$cdhit_filename = basename($cdhit_path);
 
+	
 	$msa_path = $page->msa_path;
 	$msa_fileurl = path2url($msa_path);
 	$msa_filename = basename($msa_path);

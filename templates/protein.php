@@ -153,10 +153,10 @@
 	<table class="table table-bordered table-striped" style="width: 60%;">
 	  <thead>
 	    <tr>
-	      <th style="width: 12%;"></th>
-	      <th style="width: 40%;">DPCfam domains</th>
-	      <th style="width: 40%;">Range</th>
-	      <th style="width: 8%;text-align: left;">DPCfam web</th>
+	      <th style="width: 6.6%;"></th>
+	      <th style="width: 33.3%;">DPCfam domains</th>
+	      <th style="width: 33.3%;">Range</th>
+	      <th style="width: 26.6%;text-align: left;">DPCfam web</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -184,14 +184,14 @@
 
 
 	
-		<table class="table table-bordered table-striped" style="width: 72%;">
+		<table class="table table-bordered table-striped" style="width: 76%;">
 		  <thead>
 		    <tr>
-		      <th style="width: 10%;"></th>
-		      <th style="width: 25%;">Pfam domains</th>
-		      <th style="width: 25%;">Range</th>
-		      <th style="width: 20%;text-align: left;">DPCfam web</th>
-		      <th style="width: 20%;text-align: left;">Pfam web</th>
+		      <th style="width: 5%;"></th>
+		      <th style="width: 26.3%;">Pfam domains</th>
+		      <th style="width: 26.3%;">Range</th>
+		      <th style="width: 21%;text-align: left;">DPCfam web</th>
+		      <th style="width: 21%;text-align: left;">Pfam web</th>
 		    </tr>
 		  </thead>
 		  <tbody>

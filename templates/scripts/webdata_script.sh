@@ -32,5 +32,6 @@ done;
 awk '{count[$4]+=1;len[$4]+=($3-$2+1); len2[$4]+=($3-$2+1)**2}END{for(mc in count) print mc, count[mc], len[mc]/count[mc], sqrt( (len2[mc]/count[mc]) - (len[mc]/count[mc])**2) }' sequence-labeled_filtered_all.txt > MCpop_avglen.txt
 
 
-# make zip file (files inside dir_1: dir_2; dir_3; dir_4; dir_5)
-find . -name *.fasta -exec bash -c 'dir=$(dirname $0); file=$(basename $0); cd $dir && zip -r ../seeds.zip ${file}' {} \;
+# make zip file (files inside dir_1: dir_2; dir_3; dir_4; dir_5).
+# find -j adds the files but ignores the paths
+find . -name *.hmm -print | zip -j dpcfam_hmms.zip -@
