@@ -79,7 +79,7 @@
 $(document).ready(function() {
     $('#example').DataTable( {
     	// /var/www/html/dpcfam_innodb/site/assets/data_website/metadata/metadata.json
-        "ajax": "../site/assets/data_website/metadata/metadata.json",
+        "ajax": "/site/assets/data_website/metadata/metadata.json",
         "cache": true,
         "deferRender": true,
         // "createdRow": function ( row, data, index ) {

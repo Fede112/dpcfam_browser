@@ -27,45 +27,48 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 
 
 <!-- Begin page content -->
-<main class="flex-shrink-0">
+<main class="flex-shrink-0" style="background-color:#0B9695;">
 	<div class="container">
-		<h1 class="mt-5">DPCfam search</h1>
+		<h1 class="mt-5" style="color:white">DPCfam search</h1>
+		<div id="search_div" style="background-color:#0B9695;">
+			<!-- SEARCH FORM -->
+			<form id="home-main-search" action="<?php $_PHP_SELF ?>" method="GET">
+				<div id="search-elements">
+					<select data-trigger="" name="category" id="target">
+						<!-- <option placeholder="">Category</option> -->
+						<option <?php if ($_GET['category'] == 'DPCfam') { ?>selected="true" <?php }; ?>value="DPCfam">DPCfam</option>
+						<option <?php if ($_GET['category'] == 'Pfam') { ?>selected="true" <?php }; ?>value="Pfam">Pfam</option>
+						<option <?php if ($_GET['category'] == 'Proteins') { ?>selected="true" <?php }; ?>value="Proteins">Proteins</option>
+					</select>
+					
+					<?php $value = isset($_GET["search_input"]) ? $_GET["search_input"]: ''; ?>
+					
+					<input type="search" class="form-control form-control-lg" name="search_input" id="search_input" placeholder="MC194" aria-describedby="search_inputHelp" value="<?php echo $value?>">
+					
+					<!-- <img  class="loader_anim" style="float:right;" id='loading' width="100px" src="http://rpg.drivethrustuff.com/shared_images/ajax-loader.gif"/>  -->
+					
+					<!-- <button type="submit" class="btn btn-primary" style="background-color:#134F5C;"> -->
+					<button type="submit" class="btn btn-primary" style="background-color:#098180;">
+						<svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+							<path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
+						</svg>
+					</button>
+					
+				</div>
+			</form>
 
-		<!-- SEARCH FORM -->
-		<form id="home-main-search" action="<?php $_PHP_SELF ?>" method="GET">
-			<div id="search-elements">
-				<select data-trigger="" name="category" id="target">
-					<!-- <option placeholder="">Category</option> -->
-					<option <?php if ($_GET['category'] == 'DPCfam') { ?>selected="true" <?php }; ?>value="DPCfam">DPCfam</option>
-					<option <?php if ($_GET['category'] == 'Pfam') { ?>selected="true" <?php }; ?>value="Pfam">Pfam</option>
-					<option <?php if ($_GET['category'] == 'Proteins') { ?>selected="true" <?php }; ?>value="Proteins">Proteins</option>
-				</select>
-
-				<?php $value = isset($_GET["search_input"]) ? $_GET["search_input"]: ''; ?>
-				
-			    <input type="search" class="form-control form-control-lg" name="search_input" id="search_input" placeholder="MC194" aria-describedby="search_inputHelp" value="<?php echo $value?>">
-
-			    <!-- <img  class="loader_anim" style="float:right;" id='loading' width="100px" src="http://rpg.drivethrustuff.com/shared_images/ajax-loader.gif"/>  -->
-
-				<button type="submit" class="btn btn-primary">
-					<svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-	                  <path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
-	                </svg>
-				</button>
-
-			</div>
-
-			    <!-- <pfam_label for="search_input" class="form-pfam_label">Cluster Name</pfam_label> -->
-
-		    <div id="search_inputHelp" class="form-text">Enter single query or comma separated values.</div>
-
+			<div id="search_inputHelp" class="form-text">Enter single query or comma separated values.</div>
+			
 	        <!-- <div id="DPCfam" class="vis">Content 1</div>
 	        <div id="Pfam" class="inv">Content 2</div>
 	        <div id="Proteins" class="inv">Content 3</div> -->
-
-
-		</form>
-
+			
+			
+		</div> <!-- search_div -->
+		
+		<div id="intro">
+			.
+		</div id="intro">
 
 		<!-- SEARCH RESULTS -->
 		<?php

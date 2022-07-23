@@ -81,7 +81,7 @@
 		Seeds fasta: <a href="<?php echo $fasta_fileurl; ?>" > all_seeds.fasta </a><br />
 		Seeds cdhit060 fasta: <a href="<?php echo $fasta_fileurl; ?>" > all_seeds_cdhit060.fasta </a><br />
 		HMM models: <a href="<?php echo $fasta_fileurl; ?>" > all_models.hmm </a><br /> -->
-	<div>
+	</div>
 </main>
 
 <?php include("_footer.php");?>
