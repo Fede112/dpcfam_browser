@@ -46,7 +46,7 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
     </div>
 
 	<div class="container">
-		<h1 class="mt-5" style="color:white">DPCfam search</h1>
+		<h1 class="mt-5" style="color:white">DPCfam</h1>
 		<div id="search_div">
 			<!-- SEARCH FORM -->
 			<form id="home-main-search" action="<?php $_PHP_SELF ?>" method="GET">

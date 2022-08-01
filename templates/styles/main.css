@@ -8,6 +8,7 @@ body{
     --grey:          #647493;
     --grey-light:    #AAC0CD;
     --grey-extra-light: #EFF1F3;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .navbar{
@@ -23,8 +24,14 @@ body{
     display: flex;
     align-items: center;
     position: relative;
+
+}
+#search-box-container h1{
+    text-align: center;
+    font-size: 80px;
 }
 #search-box-container .container{
+    max-width: 700px;
     z-index: 10;
 }
 
@@ -32,8 +39,8 @@ body{
     position: absolute;
     top: 50%;
     left: 50%;
-    height: 50%;
-    width: 80%;
+    height: 75%;
+    width: 85%;
     transform: translate(-50%, -50%);
 }
 #homeBg .fila{
@@ -46,7 +53,7 @@ body{
 }
 #homeBg .fila .coso{
     background: var(--primary-light);
-    height: 18px;
+    height: 22px;
     margin-right: 5px;
     border-radius: 3px;
     -webkit-transition: all .7s;
@@ -93,6 +100,8 @@ a { text-decoration: none; }
     height: 65px;
     border: 1px solid #ececec;
     color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
 }
 #search-elements input{
     border-radius: 0;
