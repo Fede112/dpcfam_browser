@@ -27,10 +27,10 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 
 
 <!-- Begin page content -->
-<main class="flex-shrink-0" style="background-color:#0B9695;">
+<main class="flex-shrink-0" id="search-box-container">
 	<div class="container">
 		<h1 class="mt-5" style="color:white">DPCfam search</h1>
-		<div id="search_div" style="background-color:#0B9695;">
+		<div id="search_div">
 			<!-- SEARCH FORM -->
 			<form id="home-main-search" action="<?php $_PHP_SELF ?>" method="GET">
 				<div id="search-elements">
@@ -40,32 +40,32 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 						<option <?php if ($_GET['category'] == 'Pfam') { ?>selected="true" <?php }; ?>value="Pfam">Pfam</option>
 						<option <?php if ($_GET['category'] == 'Proteins') { ?>selected="true" <?php }; ?>value="Proteins">Proteins</option>
 					</select>
-					
+
 					<?php $value = isset($_GET["search_input"]) ? $_GET["search_input"]: ''; ?>
-					
+
 					<input type="search" class="form-control form-control-lg" name="search_input" id="search_input" placeholder="MC194" aria-describedby="search_inputHelp" value="<?php echo $value?>">
-					
+
 					<!-- <img  class="loader_anim" style="float:right;" id='loading' width="100px" src="http://rpg.drivethrustuff.com/shared_images/ajax-loader.gif"/>  -->
-					
+
 					<!-- <button type="submit" class="btn btn-primary" style="background-color:#134F5C;"> -->
 					<button type="submit" class="btn btn-primary" style="background-color:#098180;">
 						<svg class="svg-inline--fa fa-search fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 							<path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
 						</svg>
 					</button>
-					
+
 				</div>
 			</form>
 
 			<div id="search_inputHelp" class="form-text">Enter single query or comma separated values.</div>
-			
+
 	        <!-- <div id="DPCfam" class="vis">Content 1</div>
 	        <div id="Pfam" class="inv">Content 2</div>
 	        <div id="Proteins" class="inv">Content 3</div> -->
-			
-			
+
+
 		</div> <!-- search_div -->
-		
+
 		<div id="intro">
 			.
 		</div id="intro">
@@ -74,7 +74,7 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 		<?php
 		// All queries, independently of the category, will output a set of MCs pages stored in $mc_matches
 		if(isset($_GET["search_input"]) )
-		{ 
+		{
 
 			echo "<hr/>"; ?>
 			<section>
@@ -84,9 +84,9 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 			$search_input = $sanitizer->text($search_input); // processwire sanitizer
 
 			// echo $pages->findOne("template=metacluster, (title=)")->url()."<br>";
-			
+
 			// array of mc pages which match the search input
-			$mc_matches = new pageArray(); 
+			$mc_matches = new pageArray();
 			//----------------------
 			// Display DPCfam results
 			//----------------------
@@ -102,29 +102,29 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
   						$mc_matches->add($page);
 					}
 				}
-				
+
 				// single results
 				if( $mc_matches->count == 1 )
 				{
 
 					$mc_url = $config->urls->httpRoot . "metaclusters/" . $mc_matches[0]->title;
-					// redirect to metacluster page				
+					// redirect to metacluster page
 					header("HTTP/1.1 301 Moved Permanently");
 					header("Location: $mc_url");
 					die();
 				}
-			
+
 				// multiple results
-				elseif ($mc_matches->count > 1) 
+				elseif ($mc_matches->count > 1)
 				{
 					//// Hyperlinks ?>
 					<h3><?php echo "Results for " ,$search_input ,":" ?></h3>
-		    		
+
 					<ul>
 					<?php
 					foreach($mc_matches as $item) { ?>
 	 				   <li><a href="<?php echo $item->url; ?>"><?php echo "MC".$item->title; ?></a></li>
-					<?php 
+					<?php
 					}?>
 					<ul>
 				<?php
@@ -143,7 +143,7 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
   				?>
 				<ol style="margin-top: 25px">
 				<?php
-				foreach($mc_matches as $item) { 
+				foreach($mc_matches as $item) {
 					if( $mc_matches->count >= 1 ){?>
 						<li style="padding: 1px">
       					<a href="<?php echo $item->url; ?>"><?php echo "MC".$item->title; ?></a>
@@ -152,12 +152,12 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 							aria-valuemin="0" aria-valuemax="100" style="background:<?=$pfam_eser_colors[$item->pfam_eser]?>; width:<?=100*$item->pfam_overlap?>%">
 							<span class="sr-only"><strong><?= 100*$item->pfam_overlap."%"?></strong></span>
 							</div>
-						</div> 
+						</div>
   						</li>
-  
-						
-						
-					<?php 
+
+
+
+					<?php
 					}
 
 				}?>
@@ -181,8 +181,8 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 				echo "search time: " . round($trans_size/$dt, 3). "\n";
 				// $protein_page = $pages->get("template=protein, title='$search_input'");
 
-				// if(!($protein_page instanceof NullPage)) 
-				if(($protein_page > 0)) 
+				// if(!($protein_page instanceof NullPage))
+				if(($protein_page > 0))
 				{
 					// redirect to protein page
 					$protein_url = $config->urls->httpRoot . "proteins/" . $search_input;
@@ -196,7 +196,7 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 			}
 
 			?>
-		    
+
 			</section>
 
 
@@ -206,13 +206,13 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 		    //----------------------
 			// Downloads
 			//----------------------
-				
-		    if( $mc_matches->count > 0 ){ 
-		    ?>
-			
 
-		
-				
+		    if( $mc_matches->count > 0 ){
+		    ?>
+
+
+
+
 				<h4><?php echo "Download query results"; ?></h4>
 				<?php $_SESSION['ids'] = (string) $mc_matches; ?>
 				<ul>
@@ -224,26 +224,26 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 			}?>
 			</section>
 
-			
 
 
-			<?php 
+
+			<?php
 			//----------------------
 			// No results from query
 			//----------------------
 			if( $mc_matches->count == 0 ){ ?>
 				<p>No results for that query!</p>
-			
+
 			<?php }?>
 
 
-			
+
 
 
 		<?php
 
-		}else 
-		
+		}else
+
 		{
 			// NO $search_input!!
 		}
@@ -268,9 +268,9 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
 // change placeholder based on select
 $('#target').change(function(){
     const dbText = $(this).find(':selected').text();
-    
+
     $('#search_input').attr('placeholder', function(){
-    	
+
     	if (dbText=="DPCfam") {
         	return "MC194"
         }
@@ -280,9 +280,9 @@ $('#target').change(function(){
         if (dbText=="Proteins") {
         	return "A0A009EE19"
         }
-        
+
     });
-    
+
     // change text
 	if (dbText=="DPCfam") {
 		$('#search_inputHelp').text( "Enter single query or comma separated values.");
@@ -296,12 +296,3 @@ $('#target').change(function(){
   // trigger change on page load to set initial placeholder
 }).change()
 </script>
-
-
-
-
-
-
-
-
-

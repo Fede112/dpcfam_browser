@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-  
+
   <link rel="stylesheet" href="<?php echo $config->urls->templates ?>styles/main.css">
 
 
@@ -65,8 +65,8 @@
 
         <header>
           <!-- Fixed navbar -->
-          <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <div class="container-fluid">
+          <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+            <div class="container">
                 <!-- Name/logo -->
               <a class="navbar-brand" href="<?php echo $config->urls->httpRoot ?>">DPCfam</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
