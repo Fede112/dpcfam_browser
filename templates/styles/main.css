@@ -69,7 +69,12 @@ body{
     padding: 40px;
     font-size: 18px;
 }
-
+#home-about .col{
+    text-align: center
+}
+#home-about img{
+    max-width: 300px;
+}
 #search-button{
     background: var(--secondary) !important;
 }

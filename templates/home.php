@@ -275,13 +275,13 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
                     Characterizing the function of proteins is an extremely important step in understanding biological processes. This characterization can be performed, in principle, by dedicated experiments, both in a wet lab or through computational simulations which are overall expensive. The number of proteins that have been characterized with such methods is still relatively small. Instead, in the last decades the number of protein sequences known has grown exponentially especially thanks to high throughput genomic sequencing experiments.
                     </div>
                     <div class="col">
-
+                        <img src="<?php echo $config->urls->templates ?>/images/002-protein.png" />
                     </div>
               </div>
               <!-- ROW #2 -->
               <div class="row">
                   <div class="col">
-
+                        <img src="<?php echo $config->urls->templates ?>/images/001-molecular-structure.png" />
                   </div>
                   <div class="col-6">
                   Proteins that are known only at a sequence level outnumber those with an experimental characterization by orders of magnitude and we expect this gap to increase over the next years. In this context we introduce DPCfam [1], a new unsupervised procedure that uses sequence alignments and Density Peak Clustering [2] to automatically classify homologous protein regions . DPCfam shows potential both for assisting manual annotation efforts (domain discovery, detection of classification inconsistencies, improvement of family coverage and boosting of clan membership) and as a stand-alone tool for unsupervised classification of sparsely annotated protein datasets such as those from environmental metagenomics studies (domain discovery, analysis of domain diversity).
@@ -292,8 +292,9 @@ if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_N
                 <div class="col-6">
                 In its current version we ran the DPCfam algorithm to generate clusters on the UniRef50 database, which contains representatives of all known protein sequences (sharing less than 50% similarity). The classification is evolutionary accurate and it covers a significant fraction of known homologs annotated in Pfam [3]. Moreover, DPCfam suggests the classification of previously unknown regions, tagged as UNK, some of which have been already added to the latest version of the Pfam database.
                 </div>
-                <div class="col">
 
+                <div class="col">
+                        <img src="<?php echo $config->urls->templates ?>/images/cloud-data.png" />
                 </div>
           </div>
             </div>
